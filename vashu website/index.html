@@ -1,0 +1,2564 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventPlanner - Your Perfect Event Solution</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            /* Light Theme Variables */
+            --bg-primary: #f8fafc;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --accent-primary: #d66fd2;
+            --accent-secondary: #a540a5;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --border: #e2e8f0;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --radius-sm: 6px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --transition: all 0.3s ease;
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --spacing-2xl: 2.5rem;
+            --font-family: 'Poppins', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-size-xs: 0.75rem;
+            --font-size-sm: 0.875rem;
+            --font-size-base: 1rem;
+            --font-size-lg: 1.125rem;
+            --font-size-xl: 1.25rem;
+            --font-size-2xl: 1.5rem;
+            --font-size-3xl: 1.875rem;
+            --font-size-4xl: 2.25rem;
+            --font-size-5xl: 3rem;
+        }
+
+        .dark-theme {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-card: #1e293b;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --border: #334155;
+            --accent-primary: #c084fc;
+            --accent-secondary: #a78bfa;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            transition: var(--transition);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            padding: 20px 0;
+            background-color: var(--bg-secondary);
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: var(--transition);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 800;
+            font-size: 24px;
+            color: var(--accent-primary);
+        }
+
+        .logo i {
+            font-size: 28px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+            list-style: none;
+        }
+
+        .nav-link {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            transition: var(--transition);
+            padding: 5px 0;
+        }
+
+        .nav-link:hover {
+            color: var(--accent-primary);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--accent-primary);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1519765160721-44cf7b99c9a3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80') center/cover no-repeat;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: white;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            animation: fadeIn 1s ease;
+        }
+
+        .hero h1 {
+            font-size: var(--font-size-5xl);
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: var(--font-size-xl);
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+
+        .btn {
+            padding: 14px 30px;
+            border-radius: var(--radius-md);
+            font-family: var(--font-family);
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-decoration: none;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(214, 111, 210, 0.3);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+            margin-left: 15px;
+        }
+
+        .btn-outline:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        /* Section Styling */
+        section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: var(--font-size-3xl);
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
+            border-radius: 2px;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: var(--font-size-lg);
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin: 0 auto 50px;
+        }
+
+        /* Event Categories */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .category-card {
+            background-color: var(--bg-card);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .category-img {
+            height: 220px;
+            overflow: hidden;
+        }
+
+        .category-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .category-card:hover .category-img img {
+            transform: scale(1.05);
+        }
+
+        .category-content {
+            padding: 25px;
+        }
+
+        .category-icon {
+            font-size: 2.5rem;
+            color: var(--accent-primary);
+            margin-bottom: 15px;
+        }
+
+        .category-title {
+            font-size: var(--font-size-xl);
+            margin-bottom: 15px;
+            color: var(--text-primary);
+        }
+
+        .category-description {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        .category-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent-primary);
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .category-btn:hover {
+            gap: 12px;
+        }
+
+        /* Planning Form */
+        .form-container {
+            background-color: var(--bg-card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .form-header {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .form-title {
+            font-size: var(--font-size-2xl);
+            margin-bottom: 10px;
+        }
+
+        .form-subtitle {
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-body {
+            padding: 30px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+            margin-bottom: 25px;
+        }
+
+        .form-col {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            font-family: var(--font-family);
+            font-size: var(--font-size-base);
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px rgba(214, 111, 210, 0.2);
+        }
+
+        .form-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 1em;
+        }
+
+        .checkbox-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 10px;
+        }
+
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .checkbox-item input {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--accent-primary);
+        }
+
+        .btn-submit {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            width: 100%;
+            padding: 16px;
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        /* Plan Summary */
+        .plan-summary {
+            background-color: var(--bg-card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            padding: 30px;
+            margin-top: 40px;
+            display: none;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .summary-item {
+            background-color: rgba(214, 111, 210, 0.05);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            border-left: 3px solid var(--accent-primary);
+        }
+
+        .summary-label {
+            font-size: var(--font-size-sm);
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+        }
+
+        .summary-value {
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .budget-estimate {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            border-radius: var(--radius-md);
+            padding: 25px;
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .estimate-title {
+            font-size: var(--font-size-xl);
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+
+        .estimate-value {
+            font-size: var(--font-size-4xl);
+            font-weight: 700;
+        }
+
+        .estimate-range {
+            font-size: var(--font-size-lg);
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+
+        /* Checklist Section */
+        .checklist-container {
+            background-color: var(--bg-card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        .checklist-header {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            padding: 25px 30px;
+        }
+
+        .checklist-title {
+            font-size: var(--font-size-2xl);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .checklist-body {
+            padding: 30px;
+        }
+
+        .checklist-progress {
+            margin-bottom: 30px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: var(--font-size-sm);
+            color: var(--text-secondary);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background-color: var(--border);
+            border-radius: 6px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 6px;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .checklist-items {
+            list-style: none;
+        }
+
+        .checklist-item {
+            padding: 15px 0;
+            border-bottom: 1px dashed var(--border);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .checklist-item:last-child {
+            border-bottom: none;
+        }
+
+        .checklist-checkbox {
+            width: 24px;
+            height: 24px;
+            border: 2px solid var(--border);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .checklist-checkbox.checked {
+            background-color: var(--success);
+            border-color: var(--success);
+        }
+
+        .checklist-checkbox.checked i {
+            color: white;
+            font-size: 0.8rem;
+        }
+
+        .checklist-item-text {
+            flex: 1;
+            font-size: var(--font-size-lg);
+        }
+
+        .checklist-item-date {
+            background-color: rgba(214, 111, 210, 0.1);
+            color: var(--accent-primary);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: var(--font-size-sm);
+            font-weight: 600;
+        }
+
+        .checklist-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .pdf-btn {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            border: none;
+            padding: 14px 25px;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pdf-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(214, 111, 210, 0.3);
+        }
+
+        /* Packages Section */
+        .packages-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .package-card {
+            background-color: var(--bg-card);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+            border: 2px solid transparent;
+        }
+
+        .package-card.popular {
+            border-color: var(--accent-primary);
+            transform: scale(1.03);
+        }
+
+        .package-card.popular::before {
+            content: 'MOST POPULAR';
+            position: absolute;
+            top: 15px;
+            right: -30px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            padding: 5px 30px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transform: rotate(45deg);
+        }
+
+        .package-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .package-header {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .package-name {
+            font-size: var(--font-size-2xl);
+            margin-bottom: 10px;
+        }
+
+        .package-price {
+            font-size: var(--font-size-4xl);
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .package-duration {
+            opacity: 0.9;
+        }
+
+        .package-body {
+            padding: 30px;
+        }
+
+        .package-features {
+            list-style: none;
+            margin-bottom: 30px;
+        }
+
+        .package-feature {
+            padding: 12px 0;
+            border-bottom: 1px dashed var(--border);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .package-feature:last-child {
+            border-bottom: none;
+        }
+
+        .package-feature i {
+            color: var(--success);
+            font-size: 1.2rem;
+        }
+
+        .package-btn {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .package-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(214, 111, 210, 0.3);
+        }
+
+        /* Gallery Section */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .gallery-item {
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            position: relative;
+            height: 280px;
+            cursor: pointer;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+            padding: 20px;
+            transform: translateY(100%);
+            transition: var(--transition);
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+
+        .gallery-title {
+            color: white;
+            font-size: var(--font-size-lg);
+            margin-bottom: 5px;
+        }
+
+        .gallery-category {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: var(--font-size-sm);
+        }
+
+        /* Contact Section */
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 50px;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .info-icon {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .info-content h3 {
+            margin-bottom: 8px;
+            color: var(--text-primary);
+        }
+
+        .info-content p, .info-content a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .info-content a:hover {
+            color: var(--accent-primary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .social-link:hover {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .contact-form {
+            background-color: var(--bg-card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow);
+            padding: 35px;
+        }
+
+        .form-message {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: var(--radius-md);
+            display: none;
+        }
+
+        .form-message.success {
+            background-color: rgba(16, 185, 129, 0.1);
+            color: var(--success);
+            border-left: 4px solid var(--success);
+        }
+
+        .form-message.error {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+            border-left: 4px solid var(--danger);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--bg-secondary);
+            padding: 50px 0 20px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h3 {
+            font-size: var(--font-size-xl);
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
+            border-radius: 2px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 15px;
+        }
+
+        .footer-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent-primary);
+            gap: 15px;
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: var(--font-size-sm);
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal-content {
+            background-color: var(--bg-card);
+            border-radius: var(--radius-lg);
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-header {
+            padding: 20px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            color: white;
+            border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: var(--font-size-xl);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .close-modal:hover {
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 25px;
+        }
+
+        .modal-message {
+            text-align: center;
+            font-size: var(--font-size-lg);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .modal-icon {
+            font-size: 4rem;
+            color: var(--success);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .modal-footer {
+            padding: 15px 25px 25px;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            padding: 15px 25px;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateX(120%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+            border-left: 4px solid var(--success);
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        .delay-1 { animation-delay: 0.1s; }
+        .delay-2 { animation-delay: 0.2s; }
+        .delay-3 { animation-delay: 0.3s; }
+        .delay-4 { animation-delay: 0.4s; }
+        .delay-5 { animation-delay: 0.5s; }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: var(--font-size-4xl);
+            }
+            
+            .hero p {
+                font-size: var(--font-size-lg);
+            }
+            
+            section {
+                padding: 60px 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                right: -100%;
+                flex-direction: column;
+                background-color: var(--bg-secondary);
+                width: 80%;
+                max-width: 300px;
+                height: calc(100vh - 80px);
+                padding: 20px;
+                transition: var(--transition);
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            }
+            
+            .nav-links.active {
+                right: 0;
+            }
+            
+            .hero h1 {
+                font-size: var(--font-size-3xl);
+            }
+            
+            .hero p {
+                font-size: var(--font-size-base);
+            }
+            
+            .btn {
+                display: block;
+                width: 100%;
+                margin: 10px 0;
+            }
+            
+            .btn-outline {
+                margin-left: 0;
+            }
+            
+            .section-title {
+                font-size: var(--font-size-2xl);
+            }
+            
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .checklist-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .checklist-item-date {
+                align-self: flex-end;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-glass-cheers"></i>
+                    <div>EventPlanner</div>
+                </div>
+                <button class="mobile-menu-btn" id="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <ul class="nav-links" id="nav-links">
+                    <li><a href="#home" class="nav-link active">Home</a></li>
+                    <li><a href="#categories" class="nav-link">Services</a></li>
+                    <li><a href="#packages" class="nav-link">Packages</a></li>
+                    <li><a href="#checklist" class="nav-link">Checklist</a></li>
+                    <li><a href="#gallery" class="nav-link">Gallery</a></li>
+                    <li><a href="#contact" class="nav-link">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Plan Your Dream Event with Us</h1>
+            <p>From intimate gatherings to grand celebrations, we create unforgettable experiences tailored to your vision</p>
+            <a href="#categories" class="btn btn-primary">
+                <i class="fas fa-calendar-check"></i> Start Planning Now
+            </a>
+            <a href="#packages" class="btn btn-outline">
+                <i class="fas fa-gem"></i> View Premium Packages
+            </a>
+        </div>
+    </section>
+
+    <section id="categories">
+        <div class="container">
+            <h2 class="section-title">Our Event Services</h2>
+            <p class="section-subtitle">We specialize in creating memorable experiences for all occasions. Select an event type to get started.</p>
+            
+            <div class="categories-grid">
+                <div class="category-card">
+                    <div class="category-img">
+                        <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-4.0.3&auto=format&fit=crop&w=1050&q=80" alt="Birthday Events">
+                    </div>
+                    <div class="category-content">
+                        <i class="fas fa-birthday-cake category-icon"></i>
+                        <h3 class="category-title">Birthday Parties</h3>
+                        <p class="category-description">From milestone birthdays to kids' parties, we create celebrations that match your personality and style.</p>
+                        <a href="#" class="category-btn" data-event="birthday">
+                            View Packages <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="category-card">
+                    <div class="category-img">
+                        <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&auto=format&fit=crop&w=1050&q=80" alt="Wedding Events">
+                    </div>
+                    <div class="category-content">
+                        <i class="fas fa-ring category-icon"></i>
+                        <h3 class="category-title">Wedding Events</h3>
+                        <p class="category-description">Dream weddings made real. We handle every detail from engagement to reception with elegance and precision.</p>
+                        <a href="#" class="category-btn" data-event="wedding">
+                            View Packages <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="category-card">
+                    <div class="category-img">
+                        <img src="https://images.unsplash.com/photo-1560457079-9a6539c7e0b0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1050&q=80" alt="Corporate Events">
+                    </div>
+                    <div class="category-content">
+                        <i class="fas fa-building category-icon"></i>
+                        <h3 class="category-title">Corporate Events</h3>
+                        <p class="category-description">Professional conferences, product launches, and team building events that leave a lasting impression.</p>
+                        <a href="#" class="category-btn" data-event="corporate">
+                            View Packages <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="category-card">
+                    <div class="category-img">
+                        <img src="https://images.unsplash.com/photo-1528164344705-576788f9cbc9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1050&q=80" alt="Engagement Events">
+                    </div>
+                    <div class="category-content">
+                        <i class="fas fa-gem category-icon"></i>
+                        <h3 class="category-title">Engagement Parties</h3>
+                        <p class="category-description">Celebrate your love story with a personalized engagement party that reflects your unique journey.</p>
+                        <a href="#" class="category-btn" data-event="engagement">
+                            View Packages <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="category-card">
+                    <div class="category-img">
+                        <img src="https://images.unsplash.com/photo-1541534674085-41578679816d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1050&q=80" alt="Baby Shower Events">
+                    </div>
+                    <div class="category-content">
+                        <i class="fas fa-baby category-icon"></i>
+                        <h3 class="category-title">Baby Showers</h3>
+                        <p class="category-description">Welcome your little one with a beautiful baby shower filled with joy, love, and thoughtful details.</p>
+                        <a href="#" class="category-btn" data-event="baby-shower">
+                            View Packages <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="category-card">
+                    <div class="category-img">
+                        <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-4.0.3&auto=format&fit=crop&w=1050&q=80" alt="Anniversary Events">
+                    </div>
+                    <div class="category-content">
+                        <i class="fas fa-heart category-icon"></i>
+                        <h3 class="category-title">Anniversary Celebrations</h3>
+                        <p class="category-description">Celebrate your love story with a personalized anniversary party that reflects your unique journey.</p>
+                        <a href="#" class="category-btn" data-event="anniversary">
+                            View Packages <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="planner">
+        <div class="container">
+            <h2 class="section-title">Event Planning Setup</h2>
+            <p class="section-subtitle">Fill out the form below to get your personalized event plan and checklist</p>
+            
+            <div class="form-container">
+                <div class="form-header">
+                    <h2 class="form-title">Plan Your Event</h2>
+                    <p class="form-subtitle">Let us help you create the perfect event with our expert planning services</p>
+                </div>
+                <div class="form-body">
+                    <form id="event-planner-form">
+                        <div class="form-row">
+                            <div class="form-col">
+                                <div class="form-group">
+                                    <label for="event-type">Event Type <span class="required">*</span></label>
+                                    <select id="event-type" class="form-control form-select" required>
+                                        <option value="">Select Event Type</option>
+                                        <option value="birthday">Birthday Party</option>
+                                        <option value="wedding">Wedding</option>
+                                        <option value="corporate">Corporate Event</option>
+                                        <option value="engagement">Engagement Party</option>
+                                        <option value="baby-shower">Baby Shower</option>
+                                        <option value="anniversary">Anniversary</option>
+                                        <option value="custom">Custom Event</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-col">
+                                <div class="form-group">
+                                    <label for="event-date">Event Date & Time <span class="required">*</span></label>
+                                    <input type="datetime-local" id="event-date" class="form-control" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-col">
+                                <div class="form-group">
+                                    <label for="guest-count">Number of Guests <span class="required">*</span></label>
+                                    <input type="number" id="guest-count" class="form-control" placeholder="e.g., 50" min="1" required>
+                                </div>
+                            </div>
+                            <div class="form-col">
+                                <div class="form-group">
+                                    <label for="venue-preference">Venue Preference <span class="required">*</span></label>
+                                    <select id="venue-preference" class="form-control form-select" required>
+                                        <option value="">Select Venue Type</option>
+                                        <option value="indoor">Indoor</option>
+                                        <option value="outdoor">Outdoor</option>
+                                        <option value="both">Either</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-col">
+                                <div class="form-group">
+                                    <label for="budget-range">Budget Range <span class="required">*</span></label>
+                                    <select id="budget-range" class="form-control form-select" required>
+                                        <option value="">Select Budget Range</option>
+                                        <option value="basic">$1,000 - $5,000</option>
+                                        <option value="standard">$5,000 - $15,000</option>
+                                        <option value="premium">$15,000 - $30,000</option>
+                                        <option value="luxury">$30,000+</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-col">
+                                <div class="form-group">
+                                    <label>Additional Services</label>
+                                    <div class="checkbox-group">
+                                        <div class="checkbox-item">
+                                            <input type="checkbox" id="catering" name="services" value="catering">
+                                            <label for="catering">Catering</label>
+                                        </div>
+                                        <div class="checkbox-item">
+                                            <input type="checkbox" id="decoration" name="services" value="decoration">
+                                            <label for="decoration">Decoration</label>
+                                        </div>
+                                        <div class="checkbox-item">
+                                            <input type="checkbox" id="photography" name="services" value="photography">
+                                            <label for="photography">Photography</label>
+                                        </div>
+                                        <div class="checkbox-item">
+                                            <input type="checkbox" id="music" name="services" value="music">
+                                            <label for="music">Music & Entertainment</label>
+                                        </div>
+                                        <div class="checkbox-item">
+                                            <input type="checkbox" id="invitations" name="services" value="invitations">
+                                            <label for="invitations">Invitations</label>
+                                        </div>
+                                        <div class="checkbox-item">
+                                            <input type="checkbox" id="theme" name="services" value="theme">
+                                            <label for="theme">Theme Design</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-submit">
+                            <i class="fas fa-paper-plane"></i> Generate My Event Plan
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="plan-summary" id="plan-summary">
+                <h2 class="section-title" style="text-align: left; transform: none; left: 0;">Your Event Plan Summary</h2>
+                <p class="section-subtitle" style="text-align: left; max-width: 100%;">Here's your personalized event plan based on the details you provided</p>
+                
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <div class="summary-label">Event Type</div>
+                        <div class="summary-value" id="summary-event-type">Birthday Party</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-label">Event Date</div>
+                        <div class="summary-value" id="summary-event-date">June 15, 2023 at 6:00 PM</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-label">Guest Count</div>
+                        <div class="summary-value" id="summary-guest-count">50 guests</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-label">Venue Preference</div>
+                        <div class="summary-value" id="summary-venue">Indoor</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-label">Budget Range</div>
+                        <div class="summary-value" id="summary-budget">$5,000 - $15,000</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-label">Additional Services</div>
+                        <div class="summary-value" id="summary-services">Catering, Decoration, Photography</div>
+                    </div>
+                </div>
+                
+                <div class="budget-estimate">
+                    <div class="estimate-title">Estimated Total Cost</div>
+                    <div class="estimate-value" id="estimate-value">$8,500</div>
+                    <div class="estimate-range" id="estimate-range">Range: $7,200 - $9,800</div>
+                </div>
+                
+                <div class="checklist-container">
+                    <div class="checklist-header">
+                        <h2 class="checklist-title">
+                            <i class="fas fa-clipboard-list"></i> Your Event Checklist
+                        </h2>
+                    </div>
+                    <div class="checklist-body">
+                        <div class="checklist-progress">
+                            <div class="progress-header">
+                                <span>Checklist Progress</span>
+                                <span id="checklist-progress-percentage">0%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="checklist-progress-fill" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        
+                        <ul class="checklist-items" id="checklist-items">
+                            <!-- Checklist items will be added here -->
+                        </ul>
+                        
+                        <div class="checklist-actions">
+                            <button class="pdf-btn" id="download-checklist">
+                                <i class="fas fa-download"></i> Download Checklist as PDF
+                            </button>
+                            <button class="btn btn-outline" id="reset-checklist">
+                                <i class="fas fa-redo"></i> Reset Checklist
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="packages">
+        <div class="container">
+            <h2 class="section-title">Our Premium Packages</h2>
+            <p class="section-subtitle">Choose from our carefully curated packages designed for different budgets and event types</p>
+            
+            <div class="packages-grid">
+                <div class="package-card">
+                    <div class="package-header">
+                        <h3 class="package-name">Basic Package</h3>
+                        <div class="package-price">$2,500</div>
+                        <div class="package-duration">Perfect for small gatherings (up to 25 guests)</div>
+                    </div>
+                    <div class="package-body">
+                        <ul class="package-features">
+                            <li class="package-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Venue coordination</span>
+                            </li>
+                            <li class="package-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Basic decoration</span>
+                            </li>
+                            <li class="package-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Sound system for music</span>
+                            </li>
+                            <li class="package-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Event timeline planning</span>
+                            </li>
+                            <li class="package-feature">
+                                <i class="fas fa-times-circle" style="color: var(--danger);"></i>
+                                <span>Professional photography</span>
+                            </li>
+                            <li class="package-feature">
+                                <i class="fas fa-times-circle" style="color: var(--danger);"></i>
+                                <span>Catering services</span>
+                            </li>
+                        </ul>
+                        <button class="package-btn">
+                            <i class="fas fa-shopping-cart"></i> Book Basic Package
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="package-card popular">
+                    <div class="package-header">
+                        <h3 class="package-name">Standard Package</h3>
+                        <div class="package-price">$6,500</div>
+                        <div class="package-duration">Ideal for medium events (25-75 guests)</div>
+                    </div>
+                    <div class="package-body">
+                        <ul class="package-features">
+                            <li class="package-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Full venue management</span>
+                            </li>
+                            <li class="package-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Customized decoration</span>
+                            </li>
+                            <li class="package-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Professional photography</span>
+                            </li>
+                            <li class="package-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Sound system & DJ</span>
+                            </li>
+                            <li class="package-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Catering coordination</span>
+                            </li>
+                            <li class="package-feature">
+                                <i class="fas fa-times-circle" style="color: var(--danger);"></i>
+                                <span>Custom theme design</span>
+                            </li>
+                        </ul>
+                        <button class="package-btn">
+                            <i class="fas fa-shopping-cart"></i> Book Standard Package
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="package-card">
+                    <div class="package-header">
+                        <h3 class="package-name">Premium Package</h3>
+                        <div class="package-price">$12,000</div>
+                        <div class="package-duration">Perfect for large events (75+ guests)</div>
+                    </div>
+                    <div class="package-body">
+                        <ul class="package-features">
+                            <li class="package-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Exclusive venue access</span>
+                            </li>
+                            <li class="package-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Full custom theme design</span>
+                            </li>
+                            <li class="package-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Professional photography & videography</span>
+                            </li>
+                            <li class="package-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Live band or premium DJ</span>
+                            </li>
+                            <li class="package-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Gourmet catering services</span>
+                            </li>
+                            <li class="package-feature">
+                                <i class="fas fa-check-circle"></i>
+                                <span>Personal event coordinator</span>
+                            </li>
+                        </ul>
+                        <button class="package-btn">
+                            <i class="fas fa-shopping-cart"></i> Book Premium Package
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery">
+        <div class="container">
+            <h2 class="section-title">Our Event Gallery</h2>
+            <p class="section-subtitle">Take a look at some of our recently planned events and the magic we've created</p>
+            
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?ixlib=rb-4.0.3&auto=format&fit=crop&w=1050&q=80" alt="Birthday Event">
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">Luxury Birthday Party</h3>
+                        <div class="gallery-category">Birthday Celebration</div>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&auto=format&fit=crop&w=1050&q=80" alt="Wedding Event">
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">Rustic Wedding</h3>
+                        <div class="gallery-category">Wedding Event</div>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1560457079-9a6539c7e0b0?ixlib=rb-4.0.3&auto=format&fit=crop&w=1050&q=80" alt="Corporate Event">
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">Tech Conference</h3>
+                        <div class="gallery-category">Corporate Event</div>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1528164344705-576788f9cbc9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1050&q=80" alt="Engagement Event">
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">Garden Engagement</h3>
+                        <div class="gallery-category">Engagement Party</div>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1541534674085-41578679816d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1050&q=80" alt="Baby Shower Event">
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">Princess Baby Shower</h3>
+                        <div class="gallery-category">Baby Shower</div>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1519765160721-44cf7b99c9a3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1950&q=80" alt="Anniversary Event">
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">Silver Anniversary</h3>
+                        <div class="gallery-category">Anniversary Celebration</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <h2 class="section-title">Get In Touch</h2>
+            <p class="section-subtitle">Have questions or ready to plan your event? Contact us today for a free consultation</p>
+            
+            <div class="contact-container">
+                <div class="contact-info">
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="info-content">
+                            <h3>Our Location</h3>
+                            <p>123 Event Avenue, Suite 100<br>New York, NY 10001</p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <div class="info-content">
+                            <h3>Phone Number</h3>
+                            <p><a href="tel:+12125551234">(212) 555-1234</a></p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="info-content">
+                            <h3>Email Address</h3>
+                            <p><a href="mailto:info@eventplanner.com">info@eventplanner.com</a></p>
+                        </div>
+                    </div>
+                    
+                    <div class="info-item">
+                        <div class="info-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div class="info-content">
+                            <h3>WhatsApp</h3>
+                            <p><a href="https://wa.me/12125551234" target="_blank">Chat with us on WhatsApp</a></p>
+                            <div class="social-links">
+                                <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                                <a href="#" class="social-link"><i class="fab fa-pinterest-p"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <div class="form-message" id="form-message"></div>
+                    
+                    <form id="contact-form">
+                        <div class="form-row">
+                            <div class="form-col">
+                                <div class="form-group">
+                                    <label for="name">Full Name <span class="required">*</span></label>
+                                    <input type="text" id="name" class="form-control" placeholder="John Doe" required>
+                                </div>
+                            </div>
+                            <div class="form-col">
+                                <div class="form-group">
+                                    <label for="email">Email Address <span class="required">*</span></label>
+                                    <input type="email" id="email" class="form-control" placeholder="john@example.com" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-col">
+                                <div class="form-group">
+                                    <label for="phone">Phone Number</label>
+                                    <input type="tel" id="phone" class="form-control" placeholder="(123) 456-7890">
+                                </div>
+                            </div>
+                            <div class="form-col">
+                                <div class="form-group">
+                                    <label for="event-type-contact">Event Type</label>
+                                    <select id="event-type-contact" class="form-control form-select">
+                                        <option value="">Select Event Type</option>
+                                        <option value="birthday">Birthday Party</option>
+                                        <option value="wedding">Wedding</option>
+                                        <option value="corporate">Corporate Event</option>
+                                        <option value="engagement">Engagement Party</option>
+                                        <option value="baby-shower">Baby Shower</option>
+                                        <option value="anniversary">Anniversary</option>
+                                        <option value="custom">Custom Event</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Your Message <span class="required">*</span></label>
+                            <textarea id="message" class="form-control" rows="5" placeholder="Tell us about your event..." required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-submit" style="width: 100%;">
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="logo" style="margin-bottom: 20px; color: var(--text-primary);">
+                        <i class="fas fa-glass-cheers"></i>
+                        <div>EventPlanner</div>
+                    </div>
+                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px;">Creating unforgettable experiences for all occasions with attention to detail and personalized service.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-pinterest-p"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home"><i class="fas fa-chevron-right"></i> Home</a></li>
+                        <li><a href="#categories"><i class="fas fa-chevron-right"></i> Services</a></li>
+                        <li><a href="#packages"><i class="fas fa-chevron-right"></i> Packages</a></li>
+                        <li><a href="#checklist"><i class="fas fa-chevron-right"></i> Checklist</a></li>
+                        <li><a href="#gallery"><i class="fas fa-chevron-right"></i> Gallery</a></li>
+                        <li><a href="#contact"><i class="fas fa-chevron-right"></i> Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Services</h3>
+                    <ul class="footer-links">
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Birthday Parties</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Wedding Planning</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Corporate Events</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Engagement Parties</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Baby Showers</a></li>
+                        <li><a href="#"><i class="fas fa-chevron-right"></i> Anniversary Events</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Newsletter</h3>
+                    <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px;">Subscribe to our newsletter for the latest updates and special offers.</p>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <input type="email" class="form-control" placeholder="Your email address" style="margin-bottom: 15px;">
+                        <button class="btn btn-primary" style="width: 100%;">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2023 EventPlanner. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- Success Modal -->
+    <div class="modal" id="success-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title"><i class="fas fa-check-circle"></i> Event Plan Generated!</h3>
+                <button class="close-modal" id="close-success-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <i class="fas fa-glass-cheers modal-icon"></i>
+                <p class="modal-message">Your personalized event plan has been successfully generated! Scroll down to view your plan details and checklist.</p>
+            </div>
+            <div class="modal-footer">
+                <a href="#plan-summary" class="btn btn-primary" id="view-plan-btn">
+                    <i class="fas fa-eye"></i> View My Plan
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <i class="fas fa-check-circle"></i>
+        <span id="toast-message">Checklist item marked as complete!</span>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script>
+        // App state
+        const appState = {
+            currentEvent: 'birthday',
+            checklistItems: [],
+            checklistCompleted: [],
+            budgetEstimate: 0,
+            budgetRange: '',
+            theme: 'light'
+        };
+
+        // DOM Elements
+        const dom = {
+            // Navigation
+            navLinks: document.querySelectorAll('.nav-link'),
+            mobileMenuBtn: document.getElementById('mobile-menu-btn'),
+            navLinksContainer: document.getElementById('nav-links'),
+            
+            // Event Categories
+            categoryButtons: document.querySelectorAll('.category-btn'),
+            
+            // Planning Form
+            eventPlannerForm: document.getElementById('event-planner-form'),
+            eventType: document.getElementById('event-type'),
+            eventDate: document.getElementById('event-date'),
+            guestCount: document.getElementById('guest-count'),
+            venuePreference: document.getElementById('venue-preference'),
+            budgetRange: document.getElementById('budget-range'),
+            servicesCheckboxes: document.querySelectorAll('input[name="services"]'),
+            
+            // Plan Summary
+            planSummary: document.getElementById('plan-summary'),
+            summaryEventType: document.getElementById('summary-event-type'),
+            summaryEventDate: document.getElementById('summary-event-date'),
+            summaryGuestCount: document.getElementById('summary-guest-count'),
+            summaryVenue: document.getElementById('summary-venue'),
+            summaryBudget: document.getElementById('summary-budget'),
+            summaryServices: document.getElementById('summary-services'),
+            estimateValue: document.getElementById('estimate-value'),
+            estimateRange: document.getElementById('estimate-range'),
+            checklistItems: document.getElementById('checklist-items'),
+            checklistProgressFill: document.getElementById('checklist-progress-fill'),
+            checklistProgressPercentage: document.getElementById('checklist-progress-percentage'),
+            downloadChecklist: document.getElementById('download-checklist'),
+            resetChecklist: document.getElementById('reset-checklist'),
+            
+            // Contact Form
+            contactForm: document.getElementById('contact-form'),
+            formMessage: document.getElementById('form-message'),
+            
+            // Modals
+            successModal: document.getElementById('success-modal'),
+            closeSuccessModal: document.getElementById('close-success-modal'),
+            viewPlanBtn: document.getElementById('view-plan-btn'),
+            
+            // Toast
+            toast: document.getElementById('toast'),
+            toastMessage: document.getElementById('toast-message')
+        };
+
+        // Event checklist templates
+        const eventChecklists = {
+            birthday: [
+                { id: 1, text: 'Set a date and book venue', date: '2 months before' },
+                { id: 2, text: 'Create guest list and send save-the-dates', date: '6-8 weeks before' },
+                { id: 3, text: 'Book caterer and menu tasting', date: '6 weeks before' },
+                { id: 4, text: 'Hire photographer/videographer', date: '6 weeks before' },
+                { id: 5, text: 'Order birthday cake', date: '3 weeks before' },
+                { id: 6, text: 'Send out invitations', date: '3 weeks before' },
+                { id: 7, text: 'Book DJ or music service', date: '3 weeks before' },
+                { id: 8, text: 'Plan decorations and theme', date: '3 weeks before' },
+                { id: 9, text: 'Confirm final guest count', date: '1 week before' },
+                { id: 10, text: 'Confirm all vendors', date: '3 days before' },
+                { id: 11, text: 'Prepare payment for vendors', date: '1 day before' },
+                { id: 12, text: 'Create event timeline', date: '1 day before' }
+            ],
+            wedding: [
+                { id: 1, text: 'Set wedding date and book venue', date: '12-18 months before' },
+                { id: 2, text: 'Hire wedding planner', date: '12 months before' },
+                { id: 3, text: 'Book caterer and menu tasting', date: '10 months before' },
+                { id: 4, text: 'Hire photographer/videographer', date: '10 months before' },
+                { id: 5, text: 'Book wedding officiant', date: '9 months before' },
+                { id: 6, text: 'Send save-the-dates', date: '8-9 months before' },
+                { id: 7, text: 'Book DJ or band', date: '8 months before' },
+                { id: 8, text: 'Plan wedding dress and fittings', date: '6-8 months before' },
+                { id: 9, text: 'Plan bridesmaid/groomsmen attire', date: '6 months before' },
+                { id: 10, text: 'Send wedding invitations', date: '2-3 months before' },
+                { id: 11, text: 'Book transportation', date: '2 months before' },
+                { id: 12, text: 'Plan floral arrangements', date: '2 months before' },
+                { id: 13, text: 'Book accommodation for guests', date: '2 months before' },
+                { id: 14, text: 'Finalize wedding menu', date: '1 month before' },
+                { id: 15, text: 'Confirm final guest count', date: '3 weeks before' },
+                { id: 16, text: 'Create wedding day timeline', date: '2 weeks before' },
+                { id: 17, text: 'Prepare payment for vendors', date: '1 week before' },
+                { id: 18, text: 'Mehendi/Henna ceremony planning', date: '3 days before' }
+            ],
+            corporate: [
+                { id: 1, text: 'Define event objectives and budget', date: '3-6 months before' },
+                { id: 2, text: 'Set date and book venue', date: '3-4 months before' },
+                { id: 3, text: 'Create event theme and branding', date: '3 months before' },
+                { id: 4, text: 'Plan agenda and schedule', date: '2.5 months before' },
+                { id: 5, text: 'Book keynote speakers', date: '2 months before' },
+                { id: 6, text: 'Design and send invitations', date: '2 months before' },
+                { id: 7, text: 'Plan catering and menu', date: '6 weeks before' },
+                { id: 8, text: 'Book AV equipment and technicians', date: '5 weeks before' },
+                { id: 9, text: 'Plan networking activities', date: '4 weeks before' },
+                { id: 10, text: 'Create promotional materials', date: '3 weeks before' },
+                { id: 11, text: 'Confirm attendee list', date: '2 weeks before' },
+                { id: 12, text: 'Prepare event staff briefing', date: '1 week before' },
+                { id: 13, text: 'Finalize event timeline', date: '3 days before' },
+                { id: 14, text: 'Prepare payment for vendors', date: '1 day before' }
+            ],
+            engagement: [
+                { id: 1, text: 'Set engagement party date', date: '6-8 weeks before' },
+                { id: 2, text: 'Choose venue (home, restaurant, event space)', date: '5-6 weeks before' },
+                { id: 3, text: 'Create guest list', date: '5 weeks before' },
+                { id: 4, text: 'Send invitations', date: '4 weeks before' },
+                { id: 5, text: 'Plan menu and book caterer', date: '3 weeks before' },
+                { id: 6, text: 'Order engagement cake', date: '3 weeks before' },
+                { id: 7, text: 'Book photographer', date: '3 weeks before' },
+                { id: 8, text: 'Plan decorations and theme', date: '2 weeks before' },
+                { id: 9, text: 'Create seating arrangement', date: '1 week before' },
+                { id: 10, text: 'Confirm final guest count', date: '3 days before' },
+                { id: 11, text: 'Prepare for ring display', date: '2 days before' },
+                { id: 12, text: 'Create event timeline', date: '1 day before' }
+            ],
+            'baby-shower': [
+                { id: 1, text: 'Set baby shower date', date: '8-10 weeks before' },
+                { id: 2, text: 'Choose venue (home, restaurant, event space)', date: '7-8 weeks before' },
+                { id: 3, text: 'Create guest list', date: '6-7 weeks before' },
+                { id: 4, text: 'Send invitations', date: '5-6 weeks before' },
+                { id: 5, text: 'Plan menu and book caterer', date: '4-5 weeks before' },
+                { id: 6, text: 'Order cake', date: '4 weeks before' },
+                { id: 7, text: 'Book photographer', date: '4 weeks before' },
+                { id: 8, text: 'Plan decorations and theme', date: '3 weeks before' },
+                { id: 9, text: 'Create baby registry', date: '3 weeks before' },
+                { id: 10, text: 'Plan baby shower games', date: '2 weeks before' },
+                { id: 11, text: 'Confirm final guest count', date: '1 week before' },
+                { id: 12, text: 'Create event timeline', date: '3 days before' }
+            ],
+            anniversary: [
+                { id: 1, text: 'Set anniversary date', date: '8-10 weeks before' },
+                { id: 2, text: 'Choose venue (romantic dinner, special location)', date: '7-8 weeks before' },
+                { id: 3, text: 'Create guest list', date: '6-7 weeks before' },
+                { id: 4, text: 'Send invitations', date: '5-6 weeks before' },
+                { id: 5, text: 'Plan special menu or book restaurant', date: '4-5 weeks before' },
+                { id: 6, text: 'Order anniversary cake', date: '4 weeks before' },
+                { id: 7, text: 'Book photographer', date: '4 weeks before' },
+                { id: 8, text: 'Plan decorations and theme', date: '3 weeks before' },
+                { id: 9, text: 'Create special memories display', date: '2 weeks before' },
+                { id: 10, text: 'Plan special activities or surprises', date: '2 weeks before' },
+                { id: 11, text: 'Confirm final guest count', date: '1 week before' },
+                { id: 12, text: 'Create event timeline', date: '3 days before' }
+            ],
+            custom: [
+                { id: 1, text: 'Define event purpose and goals', date: 'As needed' },
+                { id: 2, text: 'Set date and book venue', date: 'As needed' },
+                { id: 3, text: 'Create guest list', date: 'As needed' },
+                { id: 4, text: 'Send invitations', date: 'As needed' },
+                { id: 5, text: 'Plan menu and catering', date: 'As needed' },
+                { id: 6, text: 'Order cake or special treats', date: 'As needed' },
+                { id: 7, text: 'Book photographer', date: 'As needed' },
+                { id: 8, text: 'Plan decorations and theme', date: 'As needed' },
+                { id: 9, text: 'Create special activities', date: 'As needed' },
+                { id: 10, text: 'Confirm final guest count', date: 'As needed' },
+                { id: 11, text: 'Prepare for special requirements', date: 'As needed' },
+                { id: 12, text: 'Create event timeline', date: 'As needed' }
+            ]
+        };
+
+        // Budget estimates by event type and budget range
+        const budgetEstimates = {
+            birthday: {
+                basic: { value: 3500, range: '$2,800 - $4,200' },
+                standard: { value: 7500, range: '$6,500 - $8,500' },
+                premium: { value: 14000, range: '$12,000 - $16,000' },
+                luxury: { value: 22000, range: '$18,000 - $26,000' }
+            },
+            wedding: {
+                basic: { value: 8000, range: '$6,500 - $9,500' },
+                standard: { value: 18000, range: '$15,000 - $21,000' },
+                premium: { value: 32000, range: '$28,000 - $36,000' },
+                luxury: { value: 55000, range: '$48,000 - $62,000' }
+            },
+            corporate: {
+                basic: { value: 5000, range: '$4,000 - $6,000' },
+                standard: { value: 12000, range: '$10,000 - $14,000' },
+                premium: { value: 22000, range: '$19,000 - $25,000' },
+                luxury: { value: 40000, range: '$35,000 - $45,000' }
+            },
+            engagement: {
+                basic: { value: 2500, range: '$2,000 - $3,000' },
+                standard: { value: 5000, range: '$4,200 - $5,800' },
+                premium: { value: 8500, range: '$7,200 - $9,800' },
+                luxury: { value: 14000, range: '$12,000 - $16,000' }
+            },
+            'baby-shower': {
+                basic: { value: 2000, range: '$1,600 - $2,400' },
+                standard: { value: 4000, range: '$3,400 - $4,600' },
+                premium: { value: 7000, range: '$6,000 - $8,000' },
+                luxury: { value: 11000, range: '$9,500 - $12,500' }
+            },
+            anniversary: {
+                basic: { value: 2500, range: '$2,000 - $3,000' },
+                standard: { value: 5000, range: '$4,200 - $5,800' },
+                premium: { value: 8500, range: '$7,200 - $9,800' },
+                luxury: { value: 14000, range: '$12,000 - $16,000' }
+            },
+            custom: {
+                basic: { value: 3000, range: '$2,400 - $3,600' },
+                standard: { value: 6500, range: '$5,500 - $7,500' },
+                premium: { value: 12000, range: '$10,000 - $14,000' },
+                luxury: { value: 20000, range: '$17,000 - $23,000' }
+            }
+        };
+
+        // Initialize the app
+        function initApp() {
+            // Load saved data
+            loadAppState();
+            
+            // Set up event listeners
+            setupEventListeners();
+            
+            // Initialize UI
+            updateTheme();
+            
+            // Set current date for event date picker (tomorrow)
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            const formattedDate = tomorrow.toISOString().slice(0, 16);
+            dom.eventDate.value = formattedDate;
+        }
+
+        // Set up event listeners
+        function setupEventListeners() {
+            // Navigation
+            dom.navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    
+                    // Update active nav link
+                    dom.navLinks.forEach(l => l.classList.remove('active'));
+                    link.classList.add('active');
+                    
+                    // Close mobile menu if open
+                    dom.navLinksContainer.classList.remove('active');
+                    
+                    // Scroll to section
+                    const targetId = link.getAttribute('href').substring(1);
+                    document.getElementById(targetId).scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+            
+            // Mobile menu toggle
+            dom.mobileMenuBtn.addEventListener('click', () => {
+                dom.navLinksContainer.classList.toggle('active');
+            });
+            
+            // Event category buttons
+            dom.categoryButtons.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    appState.currentEvent = btn.dataset.event;
+                    dom.eventType.value = appState.currentEvent;
+                    
+                    // Scroll to planning section
+                    document.getElementById('planner').scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+            
+            // Planning form
+            dom.eventPlannerForm.addEventListener('submit', generateEventPlan);
+            
+            // Checklist interactions
+            dom.downloadChecklist.addEventListener('click', downloadChecklistPDF);
+            dom.resetChecklist.addEventListener('click', resetChecklist);
+            
+            // Contact form
+            dom.contactForm.addEventListener('submit', submitContactForm);
+            
+            // Modal interactions
+            dom.closeSuccessModal.addEventListener('click', () => {
+                dom.successModal.classList.remove('active');
+            });
+            
+            dom.viewPlanBtn.addEventListener('click', () => {
+                dom.successModal.classList.remove('active');
+                document.getElementById('plan-summary').scrollIntoView({ behavior: 'smooth' });
+            });
+            
+            // Document click for modals
+            document.addEventListener('click', (e) => {
+                if (e.target === dom.successModal) {
+                    dom.successModal.classList.remove('active');
+                }
+            });
+        }
+
+        // Load app state from localStorage
+        function loadAppState() {
+            try {
+                const savedState = localStorage.getItem('eventPlannerState');
+                if (savedState) {
+                    const state = JSON.parse(savedState);
+                    
+                    // Restore state properties
+                    appState.checklistCompleted = state.checklistCompleted || [];
+                    appState.theme = state.theme || 'light';
+                    
+                    // Update UI if checklist was saved
+                    if (appState.checklistCompleted.length > 0 && document.getElementById('plan-summary').style.display === 'block') {
+                        updateChecklistUI();
+                    }
+                }
+            } catch (e) {
+                console.error('Error loading app state:', e);
+            }
+        }
+
+        // Save app state to localStorage
+        function saveAppState() {
+            try {
+                const stateToSave = {
+                    checklistCompleted: appState.checklistCompleted,
+                    theme: appState.theme
+                };
+                
+                localStorage.setItem('eventPlannerState', JSON.stringify(stateToSave));
+            } catch (e) {
+                console.error('Error saving app state:', e);
+            }
+        }
+
+        // Update theme based on current state
+        function updateTheme() {
+            document.body.classList.toggle('dark-theme', appState.theme === 'dark');
+        }
+
+        // Generate event plan from form
+        function generateEventPlan(e) {
+            e.preventDefault();
+            
+            // Validate form
+            if (!validateForm()) {
+                showToast('Please fill in all required fields!', true);
+                return;
+            }
+            
+            // Get form values
+            const eventType = dom.eventType.value;
+            const eventDate = new Date(dom.eventDate.value);
+            const guestCount = dom.guestCount.value;
+            const venuePreference = dom.venuePreference.value;
+            const budgetRange = dom.budgetRange.value;
+            
+            // Get selected services
+            const selectedServices = [];
+            dom.servicesCheckboxes.forEach(checkbox => {
+                if (checkbox.checked) {
+                    selectedServices.push(checkbox.value);
+                }
+            });
+            
+            // Update app state
+            appState.currentEvent = eventType;
+            appState.budgetRange = budgetRange;
+            
+            // Format date for display
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            const formattedDate = eventDate.toLocaleDateString('en-US', options);
+            
+            // Update summary
+            updateSummary(
+                eventType,
+                formattedDate,
+                guestCount,
+                venuePreference,
+                budgetRange,
+                selectedServices
+            );
+            
+            // Generate checklist
+            generateChecklist(eventType);
+            
+            // Calculate budget estimate
+            calculateBudgetEstimate(eventType, budgetRange);
+            
+            // Show success modal
+            dom.successModal.classList.add('active');
+            
+            // Scroll to summary (after modal closes)
+            setTimeout(() => {
+                document.getElementById('plan-summary').style.display = 'block';
+                document.getElementById('plan-summary').scrollIntoView({ behavior: 'smooth' });
+            }, 1500);
+            
+            // Save form data to localStorage (simulated)
+            saveFormData({
+                eventType,
+                eventDate: dom.eventDate.value,
+                guestCount,
+                venuePreference,
+                budgetRange,
+                selectedServices
+            });
+        }
+
+        // Validate form
+        function validateForm() {
+            return dom.eventType.value !== '' &&
+                   dom.eventDate.value !== '' &&
+                   dom.guestCount.value !== '' &&
+                   parseInt(dom.guestCount.value) > 0 &&
+                   dom.venuePreference.value !== '' &&
+                   dom.budgetRange.value !== '';
+        }
+
+        // Update summary section
+        function updateSummary(eventType, formattedDate, guestCount, venuePreference, budgetRange, selectedServices) {
+            // Map event types to display names
+            const eventTypes = {
+                'birthday': 'Birthday Party',
+                'wedding': 'Wedding',
+                'corporate': 'Corporate Event',
+                'engagement': 'Engagement Party',
+                'baby-shower': 'Baby Shower',
+                'anniversary': 'Anniversary Celebration',
+                'custom': 'Custom Event'
+            };
+            
+            // Map venue preferences
+            const venuePreferences = {
+                'indoor': 'Indoor Venue',
+                'outdoor': 'Outdoor Venue',
+                'both': 'Indoor or Outdoor'
+            };
+            
+            // Map budget ranges
+            const budgetRanges = {
+                'basic': '$1,000 - $5,000',
+                'standard': '$5,000 - $15,000',
+                'premium': '$15,000 - $30,000',
+                'luxury': '$30,000+'
+            };
+            
+            // Map services
+            const servicesMap = {
+                'catering': 'Catering',
+                'decoration': 'Decoration',
+                'photography': 'Photography',
+                'music': 'Music & Entertainment',
+                'invitations': 'Invitations',
+                'theme': 'Theme Design'
+            };
+            
+            // Update UI
+            dom.summaryEventType.textContent = eventTypes[eventType] || eventType;
+            dom.summaryEventDate.textContent = formattedDate;
+            dom.summaryGuestCount.textContent = `${guestCount} guests`;
+            dom.summaryVenue.textContent = venuePreferences[venuePreference] || venuePreference;
+            dom.summaryBudget.textContent = budgetRanges[budgetRange] || budgetRange;
+            
+            if (selectedServices.length > 0) {
+                const servicesText = selectedServices.map(s => servicesMap[s]).join(', ');
+                dom.summaryServices.textContent = servicesText;
+            } else {
+                dom.summaryServices.textContent = 'None selected';
+            }
+        }
+
+        // Generate checklist based on event type
+        function generateChecklist(eventType) {
+            // Get checklist for event type
+            appState.checklistItems = eventChecklists[eventType] || eventChecklists.birthday;
+            appState.checklistCompleted = [];
+            
+            // Clear existing checklist
+            dom.checklistItems.innerHTML = '';
+            
+            // Add checklist items
+            appState.checklistItems.forEach(item => {
+                const checklistItem = document.createElement('li');
+                checklistItem.className = 'checklist-item';
+                checklistItem.innerHTML = `
+                    <div class="checklist-checkbox" data-id="${item.id}">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="checklist-item-text">${item.text}</div>
+                    <div class="checklist-item-date">${item.date}</div>
+                `;
+                dom.checklistItems.appendChild(checklistItem);
+            });
+            
+            // Add event listeners to checklist items
+            document.querySelectorAll('.checklist-checkbox').forEach(checkbox => {
+                checkbox.addEventListener('click', toggleChecklistItem);
+            });
+            
+            // Update progress
+            updateChecklistProgress();
+        }
+
+        // Toggle checklist item
+        function toggleChecklistItem() {
+            const id = parseInt(this.dataset.id);
+            const index = appState.checklistCompleted.indexOf(id);
+            
+            if (index === -1) {
+                // Add to completed
+                appState.checklistCompleted.push(id);
+                this.classList.add('checked');
+            } else {
+                // Remove from completed
+                appState.checklistCompleted.splice(index, 1);
+                this.classList.remove('checked');
+            }
+            
+            // Update progress
+            updateChecklistProgress();
+            
+            // Save state
+            saveAppState();
+            
+            // Show toast
+            showToast(index === -1 ? 
+                'Checklist item marked as complete!' : 
+                'Checklist item marked as incomplete!');
+        }
+
+        // Update checklist progress
+        function updateChecklistProgress() {
+            const totalItems = appState.checklistItems.length;
+            const completedItems = appState.checklistCompleted.length;
+            const percentage = totalItems > 0 ? Math.round((completedItems / totalItems) * 100) : 0;
+            
+            // Update progress bar
+            dom.checklistProgressFill.style.width = `${percentage}%`;
+            dom.checklistProgressPercentage.textContent = `${percentage}%`;
+        }
+
+        // Update checklist UI based on saved state
+        function updateChecklistUI() {
+            document.querySelectorAll('.checklist-checkbox').forEach(checkbox => {
+                const id = parseInt(checkbox.dataset.id);
+                if (appState.checklistCompleted.includes(id)) {
+                    checkbox.classList.add('checked');
+                }
+            });
+            
+            // Update progress
+            updateChecklistProgress();
+        }
+
+        // Calculate budget estimate
+        function calculateBudgetEstimate(eventType, budgetRange) {
+            const estimate = budgetEstimates[eventType][budgetRange];
+            
+            if (estimate) {
+                dom.estimateValue.textContent = `$${estimate.value.toLocaleString()}`;
+                dom.estimateRange.textContent = estimate.range;
+            }
+        }
+
+        // Save form data to localStorage (simulated)
+        function saveFormData(data) {
+            try {
+                localStorage.setItem('eventFormData', JSON.stringify(data));
+            } catch (e) {
+                console.error('Error saving form data:', e);
+            }
+        }
+
+        // Download checklist as PDF
+        function downloadChecklistPDF() {
+            const { jsPDF } = window.jspdf;
+            
+            // Create a new jsPDF instance
+            const doc = new jsPDF();
+            
+            // Add title
+            doc.setFontSize(22);
+            doc.setTextColor(100);
+            doc.text('Event Checklist', 105, 20, null, null, 'center');
+            
+            // Add event details
+            doc.setFontSize(16);
+            doc.setTextColor(40);
+            doc.text(`Event: ${dom.summaryEventType.textContent}`, 14, 35);
+            doc.text(`Date: ${dom.summaryEventDate.textContent}`, 14, 45);
+            doc.text(`Guests: ${dom.summaryGuestCount.textContent}`, 14, 55);
+            
+            // Add checklist
+            doc.setFontSize(18);
+            doc.setTextColor(70);
+            doc.text('Your Checklist', 14, 75);
+            
+            doc.setFontSize(12);
+            doc.setTextColor(100);
+            
+            let yPos = 85;
+            appState.checklistItems.forEach((item, index) => {
+                const isCompleted = appState.checklistCompleted.includes(item.id);
+                const checkbox = isCompleted ? '[x] ' : '[ ] ';
+                
+                doc.text(`${checkbox}${item.text} - ${item.date}`, 14, yPos);
+                yPos += 10;
+                
+                // Add page break if needed
+                if (yPos > 280) {
+                    doc.addPage();
+                    yPos = 20;
+                }
+            });
+            
+            // Add budget estimate
+            yPos += 15;
+            doc.setFontSize(16);
+            doc.setTextColor(70);
+            doc.text('Budget Estimate', 14, yPos);
+            
+            yPos += 10;
+            doc.setFontSize(12);
+            doc.setTextColor(100);
+            doc.text(`Estimated Total: ${dom.estimateValue.textContent}`, 14, yPos);
+            yPos += 10;
+            doc.text(`Estimated Range: ${dom.estimateRange.textContent}`, 14, yPos);
+            
+            // Save the PDF
+            doc.save(`Event_Checklist_${new Date().toISOString().split('T')[0]}.pdf`);
+            
+            showToast('Checklist downloaded successfully!');
+        }
+
+        // Reset checklist
+        function resetChecklist() {
+            if (confirm('Are you sure you want to reset your checklist? All progress will be lost.')) {
+                appState.checklistCompleted = [];
+                updateChecklistUI();
+                updateChecklistProgress();
+                saveAppState();
+                showToast('Checklist has been reset!');
+            }
+        }
+
+        // Submit contact form
+        function submitContactForm(e) {
+            e.preventDefault();
+            
+            // Validate form
+            if (!validateContactForm()) {
+                showToast('Please fill in all required fields!', true);
+                return;
+            }
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const eventType = document.getElementById('event-type-contact').value;
+            const message = document.getElementById('message').value;
+            
+            // In a real app, this would send data to a backend
+            // For this demo, we'll just show a success message
+            
+            // Show success message
+            dom.formMessage.className = 'form-message success';
+            dom.formMessage.textContent = 'Thank you for your message! We will get back to you shortly.';
+            dom.formMessage.style.display = 'block';
+            
+            // Reset form
+            dom.contactForm.reset();
+            
+            // Hide message after 5 seconds
+            setTimeout(() => {
+                dom.formMessage.style.display = 'none';
+            }, 5000);
+            
+            showToast('Message sent successfully!');
+        }
+
+        // Validate contact form
+        function validateContactForm() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            
+            return name.trim() !== '' &&
+                   email.trim() !== '' &&
+                   /\S+@\S+\.\S+/.test(email) &&
+                   message.trim() !== '';
+        }
+
+        // Show toast notification
+        function showToast(message, isError = false) {
+            dom.toastMessage.textContent = message;
+            
+            // Update toast style based on error status
+            if (isError) {
+                dom.toast.style.borderLeftColor = 'var(--danger)';
+                dom.toast.querySelector('i').className = 'fas fa-exclamation-circle';
+            } else {
+                dom.toast.style.borderLeftColor = 'var(--success)';
+                dom.toast.querySelector('i').className = 'fas fa-check-circle';
+            }
+            
+            dom.toast.classList.add('show');
+            
+            // Hide after 3 seconds
+            setTimeout(() => {
+                dom.toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Initialize the app when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initApp);
+    </script>
+</body>
+</html>
